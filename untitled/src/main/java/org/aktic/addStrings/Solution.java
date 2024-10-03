@@ -1,9 +1,7 @@
-package org.aktic.addBinary;
-
-import java.util.Map;
+package org.aktic.addStrings;
 
 public class Solution {
-    public static String addBinary(String a, String b) {
+    public static String addStrings(String a, String b) {
         int carry = 0;
         String sum = "";
 
@@ -18,19 +16,12 @@ public class Solution {
                 B = Character.getNumericValue(b.charAt(right));
                 plus = A + B + carry;
 
-                if(plus == 0) {
+                if(plus < 10) {
                     sum = Integer.toString(plus) + sum;
                     carry = 0;
-                } else if(plus == 1) {
-                    sum = Integer.toString(plus) + sum;
-                    carry = 0;
-                }
-                else if(plus == 2) {
-                    carry = 1;
-                    sum = "0" + sum;
                 } else {
                     carry = 1;
-                    sum = "1" + sum;
+                    sum = (plus%10) + sum;
                 }
                 left--;
                 right--;
@@ -38,32 +29,24 @@ public class Solution {
                 A = Character.getNumericValue(a.charAt(left));
                 plus = A + carry;
 
-                if(plus == 0) {
+                if(plus < 10) {
                     sum = Integer.toString(plus) + sum;
                     carry = 0;
-                } else if(plus == 1) {
-                    sum = Integer.toString(plus) + sum;
-                    carry = 0;
-                }
-                else if(plus == 2) {
+                } else {
                     carry = 1;
-                    sum = "0" + sum;
+                    sum = (plus%10) + sum;
                 }
                 left--;
             }else if(right >= 0) {
                 A = Character.getNumericValue(b.charAt(right));
                 plus = A + carry;
 
-                if(plus == 0) {
+                if(plus < 10) {
                     sum = Integer.toString(plus) + sum;
                     carry = 0;
-                } else if(plus == 1) {
-                    sum = Integer.toString(plus) + sum;
-                    carry = 0;
-                }
-                else if(plus == 2) {
+                } else {
                     carry = 1;
-                    sum = "0" + sum;
+                    sum = (plus%10) + sum;
                 }
                 right--;
             }
@@ -72,10 +55,8 @@ public class Solution {
         return sum;
     }
 
+
     public static void main(String[] args) {
-        System.out.println(addBinary("101111", "10"));
+        System.out.println(addStrings("11", "123"));
     }
-
-
-
 }
