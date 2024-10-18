@@ -2,31 +2,25 @@ package org.aktic.gcdOfStrings;
 
 public class Solution {
     public static String gcdOfStrings(String str1, String str2) {
-        int left = 0;
-        int right = 0;
-        String result = "";
-        String res = "";
-
-        while (left < str1.length() && right < str2.length()) {
-            if (str1.charAt(left) == str2.charAt(right)) {
-                result += str1.charAt(left);
-
-                while (left < str1.length()) {
-                    if(!result.equals(str1.substring(left, left+result.length()))) res += result;
-                    left += result.length();
-                }
-
-                while (right < str2.length()) {
-                    if(!result.equals(str2.substring(right, right+result.length()))) return "";
-                    right += result.length();
-                }
-
-                left++;
-                right++;
-            }
+        if (str2.length() > str1.length()) return gcdOfStrings(str2, str1);
+        for (int i = str2.length(); i > 0; i--) {
+            if (str2.length() % i != 0) continue;
+            String prefix = str2.substring(0, i);
+            if (dividesString(str1, prefix) && dividesString(str2, prefix))
+                return prefix;
         }
-        return result;
 
+        return "";
+    }
+
+    private static boolean dividesString(String str, String prefix) {
+        if (str.length() % prefix.length() != 0) return false;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) != prefix.charAt(i % prefix.length()))
+                return false;
+        }
+
+        return true;
     }
 
     public static void main(String[] args) {
