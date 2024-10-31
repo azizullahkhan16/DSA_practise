@@ -31,9 +31,9 @@ public class Solution {
 
         for (int i = 0; i < nums.length; i++) {
             int pos = (i + k) % nums.length;
-            if (map.containsKey(pos)) {
-                map.put(pos, map.get(pos));
-                nums[pos] = nums[i];
+            if (map.containsKey(i)) {
+                map.put(pos, nums[pos]);
+                nums[pos] = map.get(i);
             } else {
                 map.put(pos, nums[pos]);
                 nums[pos] = nums[i];
@@ -42,6 +42,6 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(rotate(new int[]{1,2,3,4,5,6,7}, 2)));
+        rotate(new int[]{1,2,3,4,5,6,7}, 3);
     }
 }
