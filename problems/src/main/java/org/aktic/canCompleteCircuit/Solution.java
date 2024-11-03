@@ -4,28 +4,26 @@ import java.util.Map;
 
 public class Solution {
     public static int canCompleteCircuit(int[] gas, int[] cost) {
-        int deficit = 0;
-        int gain = 0;
-        int station = -1;
+        int totalGain = 0;
+        int currentGain = 0;
+        int startStation = 0;
 
         for (int i = 0; i < gas.length; i++) {
-            if(gas[i]-cost[i] >= 0) {
-                gain += gas[i]-cost[i];
+            int netGain = gas[i] - cost[i];
+            totalGain += netGain;
+            currentGain += netGain;
 
-            } else if(gas[i]-cost[i]+gain < 0) {
-                deficit += gas[i] - cost[i];
+            if (currentGain < 0) {
+                startStation = i + 1;
+                currentGain = 0;
             }
-
-            if(gas[i] - cost[i] > 0) station = i;
-            else if(Math.abs(deficit) >= gain) station = -1;
-
         }
 
-        return deficit + gain >= 0 ? station : -1;
-
+        return totalGain >= 0 ? startStation : -1;
     }
 
+
     public static void main(String[] args) {
-        System.out.println(canCompleteCircuit(new int[]{6,1,4,3,5}, new int[] {3,8,2,4,2}));
+        System.out.println(canCompleteCircuit(new int[]{4,5,2,6,5,3}, new int[] {3,2,7,3,2,9}));
     }
 }
