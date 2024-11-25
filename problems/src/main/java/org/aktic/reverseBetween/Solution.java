@@ -15,17 +15,38 @@ class ListNode {
 
 public class Solution {
     public static ListNode reverseBetween(ListNode head, int left, int right) {
-//        if(head == null) return null;
-//        if(head.next == null || left == right) return head;
+        if (head == null || left == right) return head;
 
         ListNode dummy = new ListNode(0);
         dummy.next = head;
 
         ListNode pre = dummy;
-        int count = 1;
+        for (int i = 1; i < left; i++) {
+            pre = pre.next;
+        }
 
+        ListNode cur = pre.next;
+        ListNode prev = null;
+        for (int i = left; i <= right; i++) {
+            ListNode next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
 
+        pre.next.next = cur;
+        pre.next = prev;
 
         return dummy.next;
+    }
+
+    public static void main(String[] args) {
+        ListNode head = new ListNode(1);
+        head.next = new ListNode(2);
+        head.next.next = new ListNode(3);
+        head.next.next.next = new ListNode(4);
+        head.next.next.next.next = new ListNode(5);
+
+        reverseBetween(head, 2, 4);
     }
 }
