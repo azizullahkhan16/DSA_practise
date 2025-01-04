@@ -8,28 +8,19 @@ public class Solution {
     public static int[][] merge(int[][] intervals) {
         Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
         List<int[]> merged = new ArrayList<>();
-
-        boolean prevMerged = false;
+        merged.add(new int[]{intervals[0][0], intervals[0][1]});
         for (int i = 1; i < intervals.length; i++) {
-            if(intervals[i][0] <= intervals[i-1][1]) {
-                merged.add(new int[] {intervals[i-1][0], Math.max(intervals[i][1], intervals[i-1][1])});
-                prevMerged = true;
+            if(intervals[i][0] <= merged.getLast()[1]) {
+                merged.getLast()[1] = Math.max(intervals[i][1], merged.getLast()[1]);
             }else {
-                if(prevMerged) {
-                    prevMerged = false;
-                }else {
-                    merged.add(new int[] {intervals[i - 1][0], intervals[i - 1][1]});
-                }
+                merged.add(new int[]{intervals[i][0], intervals[i][1]});
             }
-        }
-        if(!prevMerged) {
-            merged.add(new int[] {intervals[intervals.length-1][0], intervals[intervals.length-1][1]});
         }
 
         return merged.toArray(new int[merged.size()][]);
     }
 
     public static void main(String[] args) {
-        System.out.println(Arrays.deepToString(merge(new int[][]{{1,4}, {0,2}, {3,5}})));
+        System.out.println(Arrays.deepToString(merge(new int[][]{{2, 3}, {4, 5}, {6, 7}, {8, 9}, {1, 10}})));
     }
 }
